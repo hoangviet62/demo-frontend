@@ -16,6 +16,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {formatLocalTime} from "@utils/helpers";
 import {useMediaQuery} from "@mui/material";
+import Skeleton from "@mui/material/Skeleton";
+import {useRef} from "react";
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -23,7 +25,7 @@ interface ExpandMoreProps extends IconButtonProps {
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
     const {expand, ...other} = props;
-    return <IconButton {...other} />;
+    return <IconButton disabled {...other} />;
 })(({theme, expand}) => ({
     transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
     marginLeft: 'auto',
@@ -34,12 +36,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 const NOT_FOUND_IMAGE = '/not_found.png'
 
-const CardView = ({data}: { data: any }) => {
+const CardView = ({data, loading}: { data?: any, loading?: boolean }) => {
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.down('sm'));
-    console.log(matches)
     const [expanded, setExpanded] = React.useState(false);
-    let imageRender = data?.images?.length > 0 ? data.images[0] : NOT_FOUND_IMAGE
+    let imageRender = data?.images?.length > 0 ? data?.images[0] : NOT_FOUND_IMAGE
     const type = imageRender.startsWith('data:image');
     imageRender = type ? decodeURI(imageRender) : imageRender
     const onMediaFallback = (event: any) => event.target.src = NOT_FOUND_IMAGE;
@@ -53,7 +54,7 @@ const CardView = ({data}: { data: any }) => {
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
         }}>
             <CardHeader
                 sx={{
@@ -66,11 +67,17 @@ const CardView = ({data}: { data: any }) => {
                         width: matches ? 175 : '100%'
                     }
                 }}
-                title={data.title}
+                title={loading ? <Skeleton
+                  animation="wave"
+                  height={10}
+                  width="80%"
+                  style={{ marginBottom: 6 }}
+                />:data?.title}
                 titleTypographyProps={{noWrap: true}}
                 avatar={
+                  loading ? <Skeleton animation="wave" variant="circular" width={40} height={40} /> :
                     <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
-                        {data.user.charAt(0).toUpperCase()}
+                        {data?.user?.charAt(0).toUpperCase()}
                     </Avatar>
                 }
                 action={
@@ -78,21 +85,30 @@ const CardView = ({data}: { data: any }) => {
                         <MoreVertIcon/>
                     </IconButton>
                 }
-                subheader={formatLocalTime(data.age)}
+                subheader={loading ? <Skeleton
+                  animation="wave"
+                  height={10}
+                  width="80%"
+                  style={{ marginBottom: 6 }}
+                /> : formatLocalTime(data?.age)}
             />
-            <CardMedia
+            {loading ? <Skeleton sx={{ height: matches ? 200 : 350 }} animation="wave" variant="rectangular" /> : <CardMedia
                 {...(type ? {src: imageRender} : {src: imageRender})}
                 component="img"
                 height={matches ? 200 : 350}
                 onError={onMediaFallback}
                 alt="Paella dish"
                 style={{objectFit: 'fill'}}
-            />
+            />}
             <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                    This impressive paella is a perfect party dish and a fun meal to cook
-                    together with your guests. Add 1 cup of frozen peas along with the mussels,
-                    if you like.
+                <Typography sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: "1",
+                    WebkitBoxOrient: "vertical",
+                }} variant="body2" color="text.secondary">
+                    {loading ? <Skeleton /> : (data?.short_description === '' ? 'Not available' : data?.short_description)}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -113,31 +129,7 @@ const CardView = ({data}: { data: any }) => {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography paragraph>Method:</Typography>
-                    <Typography paragraph>
-                        Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-                        aside for 10 minutes.
-                    </Typography>
-                    <Typography paragraph>
-                        Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-                        medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
-                        occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
-                        large plate and set aside, leaving chicken and chorizo in the pan. Add
-                        pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-                        stirring often until thickened and fragrant, about 10 minutes. Add
-                        saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-                    </Typography>
-                    <Typography paragraph>
-                        Add rice and stir very gently to distribute. Top with artichokes and
-                        peppers, and cook without stirring, until most of the liquid is absorbed,
-                        15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-                        mussels, tucking them down into the rice, and cook again without
-                        stirring, until mussels have opened and rice is just tender, 5 to 7
-                        minutes more. (Discard any mussels that don&apos;t open.)
-                    </Typography>
-                    <Typography>
-                        Set aside off of the heat to let rest for 10 minutes, and then serve.
-                    </Typography>
+
                 </CardContent>
             </Collapse>
         </Card>
