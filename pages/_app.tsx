@@ -4,14 +4,10 @@ import AppBar from "@components/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import React from "react";
-import { ToastContainer } from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {createTheme} from "@mui/material";
 import {ThemeProvider} from "@mui/system";
-// @ts-ignore
-import AvanttRegular from "./../fonts/Avantt-Regular.woff2";
-// @ts-ignore
-import AvanttSemiBold from "./../fonts/Avantt-SemiBold.woff2";
 
 const theme = createTheme({
     palette: {
@@ -38,18 +34,7 @@ const theme = createTheme({
     },
     components: {
         MuiCssBaseline: {
-            styleOverrides: {
-                "@font-face": [
-                    {
-                        fontFamily: "Avantt-Regular",
-                        src: `url(${AvanttRegular}) format("truetype")`
-                    },
-                    {
-                        fontFamily: "Avantt-SemiBold",
-                        src: `url(${AvanttSemiBold}) format("truetype")`
-                    }
-                ],
-            }
+            styleOverrides: {}
         }
     }
 });
@@ -71,7 +56,7 @@ function MyApp({Component, pageProps}: AppProps) {
                                 rtl={false}
                                 pauseOnFocusLoss
                                 draggable
-                                pauseOnHover />
+                                pauseOnHover/>
                 <Container maxWidth="xl">
                     <Component {...pageProps} />
                 </Container>

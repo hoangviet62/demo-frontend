@@ -7,6 +7,6 @@ export function formatLocalTime(
     if (timeInString) {
         const str = moment(timeInString);
 
-        return str.format(format);
+        return str.fromNow();
     }
 }

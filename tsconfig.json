@@ -32,8 +32,8 @@
       "@styles/*": [
         "styles/*"
       ],
-      "@fonts/*": [
-        "fonts/*"
+      "@public/*": [
+        "public/*"
       ]
     }
   },

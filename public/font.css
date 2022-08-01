@@ -1,0 +1,20 @@
+@font-face {
+    font-family: "Avantt-Regular";
+    src: url("/fonts/Avantt-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avantt-SemiBold";
+    src: url("/fonts/Avantt-SemiBold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avantt-Medium";
+    src: url("/fonts/Avantt-Medium.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+}

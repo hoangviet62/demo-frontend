@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Grid} from "@mui/material";
 import CardView from '@components/CardView';
 import Typography from "@mui/material/Typography";
@@ -6,29 +6,29 @@ import axios from 'axios'
 import nextConfig from 'next/config'
 import {toast} from 'react-toastify'
 import InfiniteScroll from 'react-infinite-scroll-component';
+
 const {baseUrl} = nextConfig().publicRuntimeConfig
 
 
 const Index = () => {
     const [articles, setArticles] = useState<object[]>([])
     const [fetching, setFetching] = useState<boolean>(false)
-    const [page, setPage] = useState<number>(0)
+    const [page, setPage] = useState<number>(1)
     const apiUrl = `${baseUrl}/articles?page=${page}`
 
     const fetchData = () => {
-        if (page === 0) return;
         const failedPage = page;
 
         setFetching(true);
         axios.get(apiUrl)
-        .then(response => {
-            const temp = articles.concat(response.data.data)
-            setArticles(temp);
-            toast.success(`Fetched data from ${response.data.source_from} with page ${page} in ${response.data.duration}`)
-        })
-        .catch(() => {
-            toast.error(`Failed to fetch data with page ${page}`)
-        }).then(() => {
+            .then(response => {
+                const temp = articles.concat(response.data.data)
+                setArticles(temp);
+                toast.success(`Fetched data from ${response.data.source_from} with page ${page} in ${response.data.duration}`)
+            })
+            .catch(() => {
+                toast.error(`Failed to fetch data with page ${page}`)
+            }).then(() => {
             setFetching(false)
             setPage(failedPage)
         })
@@ -64,11 +64,11 @@ const Index = () => {
     }
 
     const handleLoadMore = () => {
-        if (page < 7) setPage(page+1)
+        if (page < 7) setPage(page + 1)
     }
 
     return (
-          <InfiniteScroll
+        <InfiniteScroll
             dataLength={articles.length}
             next={handleLoadMore}
             hasMore={page < 8}
@@ -77,18 +77,19 @@ const Index = () => {
                           alignItems="stretch"
             >{cardViewSkeletonRendering()}
             </Grid>}
-          >
-              <Grid container
-                    spacing={3}
-                    alignItems="stretch"
-                    sx={{mb: 3}}
-              >
-              <Grid item xs={12} mt={5}>
-                  <Typography color="primary" variant="h3" align="center" gutterBottom>Hacker News - Top Links</Typography>
-              </Grid>
-              {cardViewRendering()}
-              </Grid>
-          </InfiniteScroll>
+        >
+            <Grid container
+                  spacing={3}
+                  alignItems="stretch"
+                  sx={{mb: 3}}
+            >
+                <Grid item xs={12} mt={5}>
+                    <Typography color="primary" variant="h3" align="center" gutterBottom>Hacker News - Top
+                        Links</Typography>
+                </Grid>
+                {cardViewRendering()}
+            </Grid>
+        </InfiniteScroll>
     )
 }
 
