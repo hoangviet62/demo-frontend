@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {Grid} from "@mui/material";
 import CardView from '@components/CardView';
-import Typography from "@mui/material/Typography";
 import axios from 'axios'
 import nextConfig from 'next/config'
 import {toast} from 'react-toastify'
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from "react-infinite-scroll-component";
+import Typography from "@mui/material/Typography";
 
 const {baseUrl} = nextConfig().publicRuntimeConfig
 
@@ -50,17 +50,19 @@ const Index = () => {
     }
 
     const cardViewSkeletonRendering = () => {
-        return [
-            <Grid key={1} item xl={4} lg={4} md={6} sm={12}>
-                <CardView loading={fetching}/>
-            </Grid>,
-            <Grid key={2} item xl={4} lg={4} md={6} sm={12}>
-                <CardView loading={fetching}/>
-            </Grid>,
-            <Grid key={3} item xl={4} lg={4} md={6} sm={12}>
-                <CardView loading={fetching}/>
+        return (
+            <Grid container spacing={3}>
+                <Grid key={1} item xl={4} lg={4} md={6} sm={12}>
+                    <CardView loading={fetching}/>
+                </Grid>
+                <Grid key={2} item xl={4} lg={4} md={6} sm={12}>
+                    <CardView loading={fetching}/>
+                </Grid>
+                <Grid key={3} item xl={4} lg={4} md={6} sm={12}>
+                    <CardView loading={fetching}/>
+                </Grid>
             </Grid>
-        ]
+        )
     }
 
     const handleLoadMore = () => {
@@ -90,6 +92,7 @@ const Index = () => {
                 {cardViewRendering()}
             </Grid>
         </InfiniteScroll>
+        // cardViewSkeletonRendering()
     )
 }
 
