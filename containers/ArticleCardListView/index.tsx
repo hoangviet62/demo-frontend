@@ -66,8 +66,6 @@ const Index: NextComponentType = () => {
         setPage(page+1)
     }
 
-    console.log(page)
-
     return (
           <InfiniteScroll
             dataLength={articles.length}
@@ -85,7 +83,7 @@ const Index: NextComponentType = () => {
                     sx={{mb: 3}}
               >
               <Grid item xs={12} mt={5}>
-                  <Typography variant="h3" align="center" gutterBottom>List Items</Typography>
+                  <Typography variant="h3" align="center" gutterBottom>Hacker News - Top Links</Typography>
               </Grid>
               {cardViewRendering()}
               </Grid>
