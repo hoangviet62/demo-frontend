@@ -3,7 +3,7 @@ const nextConfig = {
     reactStrictMode: false,
     swcMinify: true,
     publicRuntimeConfig: {
-        baseUrl: process.env.BASE_URL
+        baseUrl: process.env.BASE_URL || 'https://still-scrubland-46691.herokuapp.com'
     },
     webpack(config) {
         config.module.rules.push({
