@@ -36,21 +36,19 @@ const NOT_FOUND_IMAGE = '/not_found.png'
 const CardView = ({data, loading}: { data?: any, loading?: boolean }) => {
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.down('sm'));
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded,] = React.useState(false);
     let imageRender = data?.images?.length > 0 ? data?.images[0] : NOT_FOUND_IMAGE
     const type = imageRender.startsWith('data:image');
     imageRender = type ? decodeURI(imageRender) : imageRender
     const onMediaFallback = (event: any) => event.target.src = NOT_FOUND_IMAGE;
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
     const Router = useRouter();
 
     return (
         <a style={{cursor: 'pointer', textDecoration: 'none'}}
            onClick={() => Router.push(`/article/${data?.id}?url=${data.url}`)}>
             <Card sx={{
+                display: 'flex',
+                flexDirection: 'column',
                 height: '100%',
             }} elevation={3}>
                 {loading ? <Skeleton sx={{height: matches ? 200 : 350}} animation="wave" variant="rectangular"/> :
@@ -64,12 +62,13 @@ const CardView = ({data, loading}: { data?: any, loading?: boolean }) => {
                     />}
                 <CardContent>
                     <Typography sx={{
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        display: "-webkit-box",
-                        WebkitLineClamp: "2",
-                        WebkitBoxOrient: "vertical",
-                        fontWeight: 600
+                        // overflow: "hidden",
+                        // textOverflow: "ellipsis",
+                        // display: "-webkit-box",
+                        // WebkitLineClamp: "1",
+                        // WebkitBoxOrient: "vertical",
+                        fontWeight: 600,
+                        // width: matches ? 300 : '100%',
                     }} variant="h6" color="text.secondary">
                         {loading ?
                             <Skeleton/> : data?.title}
@@ -85,8 +84,10 @@ const CardView = ({data, loading}: { data?: any, loading?: boolean }) => {
                             <Skeleton/> : (data?.short_description === '' ? 'Not available' : data?.short_description)}
                     </Typography>
                 </CardContent>
+                <div style={{flexGrow: 1}}/>
                 <CardActions disableSpacing sx={{
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    display: matches ? 'inline-block' : 'flex'
                 }}>
                     <IconButton aria-label="points">
                         <ScoreboardIcon/> &nbsp; <Typography variant="caption">{loading ?

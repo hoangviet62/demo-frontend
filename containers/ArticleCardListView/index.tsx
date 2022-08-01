@@ -84,7 +84,7 @@ const Index = () => {
                   sx={{mb: 3}}
             >
                 <Grid item xs={12} mt={5}>
-                    <Typography color="primary" variant="h3" align="center" gutterBottom>Hacker News - Top
+                    <Typography color="primary" variant="h4" align="center" gutterBottom>Hacker News - Top
                         Links</Typography>
                 </Grid>
                 {cardViewRendering()}
