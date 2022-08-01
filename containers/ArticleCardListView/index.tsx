@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-import type {NextComponentType} from 'next'
 import {Grid} from "@mui/material";
 import CardView from '@components/CardView';
 import Typography from "@mui/material/Typography";
@@ -10,7 +9,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 const {baseUrl} = nextConfig().publicRuntimeConfig
 
 
-const Index: NextComponentType = () => {
+const Index = () => {
     const [articles, setArticles] = useState<object[]>([])
     const [fetching, setFetching] = useState<boolean>(false)
     const [page, setPage] = useState<number>(0)

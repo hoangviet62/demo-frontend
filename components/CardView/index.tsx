@@ -10,8 +10,6 @@ import Avatar from '@mui/material/Avatar';
 import IconButton, {IconButtonProps} from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import {red} from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import CommentIcon from '@mui/icons-material/Comment';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -19,6 +17,8 @@ import {formatLocalTime} from "@utils/helpers";
 import {useMediaQuery} from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
 import ScoreboardIcon from '@mui/icons-material/Scoreboard';
+import {useRouter} from 'next/router';
+
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -48,8 +48,10 @@ const CardView = ({data, loading}: { data?: any, loading?: boolean }) => {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+    const Router = useRouter();
 
     return (
+      <a style={{cursor: 'pointer', textDecoration: 'none'}} onClick={() => Router.push(`/article/${data?.id}?url=${data.url}`)}>
         <Card sx={{
             height: '100%',
             display: 'flex',
@@ -131,6 +133,7 @@ const CardView = ({data, loading}: { data?: any, loading?: boolean }) => {
                 <CardContent />
             </Collapse>
         </Card>
+          </a>
     );
 }
 

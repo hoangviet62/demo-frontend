@@ -9,9 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import {createTheme} from "@mui/material";
 import {ThemeProvider} from "@mui/system";
 // @ts-ignore
-import AvanttRegular from "@styles/fonts/Avantt-Regular.woff2";
+import AvanttRegular from "./../fonts/Avantt-Regular.woff2";
 // @ts-ignore
-import AvanttSemiBold from "@styles/fonts/Avantt-SemiBold.woff2";
+import AvanttSemiBold from "./../fonts/Avantt-SemiBold.woff2";
 
 const theme = createTheme({
     palette: {
@@ -25,6 +25,11 @@ const theme = createTheme({
             fontFamily: "Avantt-SemiBold",
             fontSize: 72,
             fontWeight: 700,
+        },
+        h4: {
+            fontFamily: "Avantt-SemiBold",
+            fontSize: 48,
+            fontWeight: 500,
         },
         body2: {
             fontSize: 18,
