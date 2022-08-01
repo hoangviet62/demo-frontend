@@ -12,13 +12,13 @@ import Typography from '@mui/material/Typography';
 import {red} from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
+import CommentIcon from '@mui/icons-material/Comment';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {formatLocalTime} from "@utils/helpers";
 import {useMediaQuery} from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
-import {useRef} from "react";
-
+import ScoreboardIcon from '@mui/icons-material/Scoreboard';
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
@@ -113,10 +113,10 @@ const CardView = ({data, loading}: { data?: any, loading?: boolean }) => {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
-                    <FavoriteIcon/>
+                    <ScoreboardIcon /> &nbsp; <Typography variant="caption">{loading ? <Skeleton />  : data?.score}</Typography>
                 </IconButton>
                 <IconButton aria-label="share">
-                    <ShareIcon/>
+                    <CommentIcon /> &nbsp; <Typography variant="caption">{loading ? <Skeleton />  : data?.comment}</Typography>
                 </IconButton>
                 <ExpandMore
                     expand={expanded}
@@ -128,9 +128,7 @@ const CardView = ({data, loading}: { data?: any, loading?: boolean }) => {
                 </ExpandMore>
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-
-                </CardContent>
+                <CardContent />
             </Collapse>
         </Card>
     );

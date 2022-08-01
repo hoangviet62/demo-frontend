@@ -18,18 +18,20 @@ const Index: NextComponentType = () => {
 
     const fetchData = () => {
         if (page === 0) return;
+        const failedPage = page;
 
         setFetching(true);
         axios.get(apiUrl)
         .then(response => {
             const temp = articles.concat(response.data.data)
             setArticles(temp);
-            toast.success(`Fetched data from ${response.data.source_from} with page ${page}`)
+            toast.success(`Fetched data from ${response.data.source_from} with page ${page} in ${response.data.duration}`)
         })
         .catch(() => {
             toast.error(`Failed to fetch data with page ${page}`)
         }).then(() => {
             setFetching(false)
+            setPage(failedPage)
         })
     }
 
@@ -63,7 +65,7 @@ const Index: NextComponentType = () => {
     }
 
     const handleLoadMore = () => {
-        setPage(page+1)
+        if (page < 7) setPage(page+1)
     }
 
     return (
@@ -83,7 +85,7 @@ const Index: NextComponentType = () => {
                     sx={{mb: 3}}
               >
               <Grid item xs={12} mt={5}>
-                  <Typography variant="h3" align="center" gutterBottom>Hacker News - Top Links</Typography>
+                  <Typography color="primary" variant="h3" align="center" gutterBottom>Hacker News - Top Links</Typography>
               </Grid>
               {cardViewRendering()}
               </Grid>
