@@ -10,7 +10,7 @@ import {Grid} from "@mui/material";
 const {baseUrl} = nextConfig().publicRuntimeConfig
 
 const Index = ({id, url}: { id: number, url: string }) => {
-    const [fetching, setFetching] = useState(false);
+    const [, setFetching] = useState(false);
     const Router = useRouter();
     const apiUrl = `${baseUrl}/articles/${id}?url=${url}`
     const [title, setTitle] = useState('')
@@ -28,7 +28,12 @@ const Index = ({id, url}: { id: number, url: string }) => {
                     listContent.splice(randomNumber(listContent.length), 0, `<div style="width: 100%; text-align: center"><img style="width: 100%;
   height: auto;" src=${image} /></div>`);
                 })
-                setContent(listContent.join(''))
+                const newData = listContent.map((ele: any) => {
+                    console.log(ele)
+                    const newEle = ele.replace('<img', '<img style="width:100%"')
+                    return newEle;
+                })
+                setContent(newData.join(''))
                 setTitle(response.data.data.title)
             })
             .catch(() => {
@@ -43,12 +48,14 @@ const Index = ({id, url}: { id: number, url: string }) => {
 
     return (<>
         <Grid container spacing={0}>
-            <Grid item xs={12}>
+            <Grid item xs={12} alignItems={"center"} alignContent={"center"}>
+                <div style={{width: '100%', textAlign: 'center'}}>
                 <IconButton aria-label="back" color="primary" onClick={() => {
                     Router.back()
                 }}>
                     <ArrowBackIcon/>
                 </IconButton>
+                </div>
             </Grid>
             <Grid item xs={12}>&nbsp;</Grid>
             <Grid item xs={12}>

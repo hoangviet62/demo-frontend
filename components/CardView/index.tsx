@@ -16,24 +16,9 @@ import PeopleIcon from '@mui/icons-material/People';
 import {formatLocalTime} from "@utils/helpers";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-interface ExpandMoreProps extends IconButtonProps {
-    expand: boolean;
-}
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-    const {expand, ...other} = props;
-    return <IconButton disabled {...other} />;
-})(({theme, expand}) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-}));
-
 const NOT_FOUND_IMAGE = '/not_found.png'
 
-const CardView = ({data, loading}: { data?: any, loading?: boolean }) => {
+const CardView = ({data, loading, maxWidth}: { data?: any, loading?: boolean, maxWidth?: number | string }) => {
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.down('sm'));
     const [expanded,] = React.useState(false);
@@ -44,31 +29,27 @@ const CardView = ({data, loading}: { data?: any, loading?: boolean }) => {
     const Router = useRouter();
 
     return (
+
         <a style={{cursor: 'pointer', textDecoration: 'none'}}
            onClick={() => Router.push(`/article/${data?.id}?url=${data.url}`)}>
             <Card sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100%',
+                width: '100%'
             }} elevation={3}>
                 {loading ? <Skeleton sx={{height: matches ? 200 : 350}} animation="wave" variant="rectangular"/> :
                     <CardMedia
                         {...(type ? {src: imageRender} : {src: imageRender})}
                         component="img"
-                        height={matches ? 200 : 350}
                         onError={onMediaFallback}
-                        alt="Paella dish"
+                        height={250}
+                        alt={data?.title}
                         style={{objectFit: 'fill'}}
                     />}
                 <CardContent>
                     <Typography sx={{
-                        // overflow: "hidden",
-                        // textOverflow: "ellipsis",
-                        // display: "-webkit-box",
-                        // WebkitLineClamp: "1",
-                        // WebkitBoxOrient: "vertical",
                         fontWeight: 600,
-                        // width: matches ? 300 : '100%',
                     }} variant="h6" color="text.secondary">
                         {loading ?
                             <Skeleton/> : data?.title}
@@ -79,6 +60,7 @@ const CardView = ({data, loading}: { data?: any, loading?: boolean }) => {
                         display: "-webkit-box",
                         WebkitLineClamp: "2",
                         WebkitBoxOrient: "vertical",
+                        maxWidth: matches ? 250 : '100%',
                     }} variant="body2" color="text.secondary">
                         {loading ?
                             <Skeleton/> : (data?.short_description === '' ? 'Not available' : data?.short_description)}

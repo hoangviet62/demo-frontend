@@ -24,7 +24,7 @@ const theme = createTheme({
         },
         h4: {
             fontFamily: "Avantt-SemiBold",
-            fontSize: 48,
+            fontSize: '4vh',
             fontWeight: 500,
         },
         body2: {
